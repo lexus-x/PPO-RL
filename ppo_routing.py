@@ -9,7 +9,7 @@ TOTAL_TIMESTEPS = 2_000_000
 
 class ProgressLogger(BaseCallback):
     """Logs progress to file every 20k steps."""
-    def __init__(self, log_path="training.log", print_every=20000):
+    def __init__(self, log_path="logs/training.log", print_every=20000):
         super().__init__()
         self.log_path = log_path
         self.print_every = print_every
@@ -67,10 +67,10 @@ def train_ppo(total_timesteps=TOTAL_TIMESTEPS):
         device="cuda",
     )
     print(f"Training MaskablePPO (2M steps) | {NUM_ENVS} envs | batch=512 | net=[256,256] | GPU")
-    callback = ProgressLogger(log_path="training.log", print_every=20000)
+    callback = ProgressLogger(log_path="logs/training.log", print_every=20000)
     model.learn(total_timesteps=total_timesteps, callback=callback)
-    model.save("ppo_changwon_routing_deep")
-    print("Model saved to ppo_changwon_routing_deep.zip")
+    model.save("models/ppo_changwon_routing_deep")
+    print("Model saved to models/ppo_changwon_routing_deep.zip")
     env.close()
     return model
 

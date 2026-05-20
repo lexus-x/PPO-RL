@@ -14,8 +14,8 @@ class ChangwonRoutingEnv(gym.Env):
         obs_size = 1 + self.num_nodes + (self.num_nodes * self.num_nodes)
         self.observation_space = spaces.Box(low=0, high=self.num_nodes, shape=(obs_size,), dtype=np.float32)
         
-        if os.path.exists("real_distances.npy"):
-            self.base_distances = np.load("real_distances.npy")
+        if os.path.exists("data/real_distances.npy"):
+            self.base_distances = np.load("data/real_distances.npy")
         else:
             self.base_distances = np.random.uniform(100.0, 5000.0, size=(self.num_nodes, self.num_nodes))
             np.fill_diagonal(self.base_distances, 0)

@@ -8,8 +8,6 @@ __pycache__/
 *$py.class
 
 # Logs and Checkpoints
-*.log
-logs/
 checkpoints/
 
 # Old model backups

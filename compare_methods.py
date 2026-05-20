@@ -33,7 +33,7 @@ if __name__ == "__main__":
     
     # 2. Evaluate Deep PPO
     try:
-        model = MaskablePPO.load("ppo_changwon_routing_deep")
+        model = MaskablePPO.load("models/ppo_changwon_routing_deep")
         ppo_mean = run_ppo_eval(env, model, episodes=100)
         print(f"PPO RL Agent Mean Reward: {ppo_mean:.2f}")
         

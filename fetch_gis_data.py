@@ -27,8 +27,8 @@ def fetch_and_save_distances(num_nodes=20):
                 except nx.NetworkXNoPath:
                     dist_matrix[i, j] = 999999.0
                     
-    np.save("real_distances.npy", dist_matrix)
-    print("Real distance matrix saved to real_distances.npy")
+    np.save("data/real_distances.npy", dist_matrix)
+    print("Real distance matrix saved to data/real_distances.npy")
 
 if __name__ == "__main__":
     fetch_and_save_distances(num_nodes=20)

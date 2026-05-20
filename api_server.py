@@ -6,7 +6,7 @@ from sb3_contrib import MaskablePPO
 # Load the trained model
 print("Loading MaskablePPO RL Agent...")
 try:
-    model = MaskablePPO.load("ppo_changwon_routing_deep")
+    model = MaskablePPO.load("models/ppo_changwon_routing_deep")
     print("Model loaded successfully!")
 except Exception as e:
     print("Error loading model, ensure it is trained first:", e)
