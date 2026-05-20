@@ -1,0 +1,23 @@
+# Environments
+venv/
+env/
+.env
+.venv
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs and Checkpoints
+*.log
+logs/
+checkpoints/
+
+# Old model backups
+ppo_changwon_routing.zip
+# We keep ppo_changwon_routing_deep.zip as the primary trained model
+
+# IDEs and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
