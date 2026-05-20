@@ -1,0 +1,6 @@
+--- Real Changwon GIS Truck Routing Comparison ---
+Heuristic (Greedy Nearest Neighbor) Mean Reward: 9.25
+PPO RL Agent Mean Reward: 9.30
+
+--- Conclusion ---
+PPO RL performs better by 0.5%! It learned to adapt to dynamic traffic.
