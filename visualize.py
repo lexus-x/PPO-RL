@@ -70,12 +70,37 @@ for i, coord in enumerate(coords):
 
 if run_sim:
     env = ChangwonRoutingEnv(num_nodes=20)
-    obs, _ = env.reset()
-    done = False
     
+    with st.spinner("Running 100 episodes for comparison..."):
+        from heuristic_routing import run_heuristic
+        heuristic_mean = run_heuristic(env, episodes=100)
+        
+        total_ppo_rewards = []
+        for _ in range(100):
+            obs, _ = env.reset()
+            done = False
+            ep_reward = 0
+            while not done:
+                action_masks = env.action_masks()
+                action, _ = agent.predict(obs, deterministic=True, action_masks=action_masks)
+                obs, reward, terminated, truncated, _ = env.step(action)
+                ep_reward += reward
+                done = terminated or truncated
+            total_ppo_rewards.append(ep_reward)
+        ppo_mean = np.mean(total_ppo_rewards)
+        
+    pct_diff = ((ppo_mean - heuristic_mean) / abs(heuristic_mean)) * 100
+
+    st.sidebar.markdown("### 🏆 Performance (100 Episodes)")
+    st.sidebar.metric("PPO Agent Mean", f"{ppo_mean:.2f}", f"{pct_diff:.2f}% vs Baseline")
+    st.sidebar.metric("Greedy Heuristic Mean", f"{heuristic_mean:.2f}")
+    st.sidebar.markdown("---")
+    
+    # Run one specific episode to map
+    obs, _ = env.reset(seed=42)
+    done = False
     route_sequence = [0]
     total_reward = 0
-    
     while not done:
         action_masks = env.action_masks()
         action, _ = agent.predict(obs, deterministic=True, action_masks=action_masks)
@@ -84,8 +109,9 @@ if run_sim:
         total_reward += reward
         done = terminated or truncated
         
-    st.sidebar.metric("Total Route Nodes", len(route_sequence))
-    st.sidebar.metric("Total PPO Reward", f"{total_reward:.2f}")
+    st.sidebar.markdown("### 🗺️ Mapped Route Demo")
+    st.sidebar.metric("Route Nodes Visited", len(route_sequence))
+    st.sidebar.metric("Demo Route Reward", f"{total_reward:.2f}")
     
     # Draw route
     route_coords = [[coords[node]['lat'], coords[node]['lon']] for node in route_sequence]
